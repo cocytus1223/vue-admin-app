@@ -7,10 +7,7 @@
       ref="form"
       label-width="80px"
     >
-      <img
-        src="../assets/avatar.jpg"
-        alt=""
-      >
+      <img src="../assets/avatar.jpg">
       <el-form-item
         label="用户名"
         prop="username"
@@ -101,7 +98,7 @@ export default {
             // token 存储到vuex中
             this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
             this.$store.dispatch('setUser', decoded)
-            this.$router.push('/home')
+            this.$router.push('/index')
           } else {
             this.$message.error(res.data.meta.msg)
           }
