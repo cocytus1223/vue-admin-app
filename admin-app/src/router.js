@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
+import NotFound from './views/404.vue'
 import Login from '@/views/Login'
 import Users from '@/views/Users'
 
@@ -12,6 +13,11 @@ const router = new Router({
   routes: [{
     path: '/',
     component: Login
+  },
+  {
+    path: '*',
+    name: '/404',
+    component: NotFound
   },
   {
     path: '/index',

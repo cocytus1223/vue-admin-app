@@ -95,6 +95,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页 -->
     <el-row>
       <el-col :span=24>
         <div class="pagination">
@@ -124,6 +125,11 @@ export default {
       pageSize: 2,
       currentPage: 1,
       total: 0
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
     }
   },
   created() {
@@ -178,6 +184,9 @@ export default {
         .catch(() => {
           this.$message.info('取消删除')
         })
+    },
+    handleEdit() {
+
     },
     searchUser() {
 
