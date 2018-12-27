@@ -1,5 +1,7 @@
 <template>
-  <div id="app"><router-view /></div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 <script>
 import jwtDecode from 'jwt-decode'
@@ -26,4 +28,8 @@ export default {
   }
 }
 </script>
-<style lang="stylus"></style>
+<style lang="stylus">
+html, body, #app
+  width 100%
+  height 100%
+</style>
