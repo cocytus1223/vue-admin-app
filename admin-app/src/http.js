@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { Message, Loading } from 'element-ui'
+import {
+  Message,
+  Loading
+} from 'element-ui'
 import router from './router'
 
 let loading
@@ -33,14 +36,16 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   // 结束加载动画
   endLoading()
-  return response
+  return response.data
 }, error => {
   // 错误提醒
   endLoading()
   Message.error(error.response.data)
 
   // 获取错误状态码
-  const { status } = error.response
+  const {
+    status
+  } = error.response
   if (status === 401) {
     Message.error('token失效，请重新登录！')
     // 清除token

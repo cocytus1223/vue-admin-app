@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-import NotFound from './views/404.vue'
+import NotFound from '@/views/404'
 import Login from '@/views/Login'
 import Users from '@/views/Users'
 
@@ -12,6 +12,10 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [{
     path: '/',
+    component: Login
+  },
+  {
+    path: '/login',
     component: Login
   },
   {
@@ -26,26 +30,26 @@ const router = new Router({
       path: '/users',
       component: Users
     }
-      //   // {
-      //   //   path: '/rights',
-      //   //   component: Rights
-      //   // },
-      //   // {
-      //   //   path: '/roles',
-      //   //   component: Roles
-      //   // },
-      //   // {
-      //   //   path: '/categories',
-      //   //   component: Categories
-      //   // },
-      //   // {
-      //   //   path: '/goods',
-      //   //   component: Goods
-      //   // },
-      //   // {
-      //   //   path: '/goods-add',
-      //   //   component: Add
-      //   // }
+      // {
+      //   path: '/rights',
+      //   component: Rights
+      // },
+      // {
+      //   path: '/roles',
+      //   component: Roles
+      // },
+      // {
+      //   path: '/categories',
+      //   component: Categories
+      // },
+      // {
+      //   path: '/goods',
+      //   component: Goods
+      // },
+      // {
+      //   path: '/goods-add',
+      //   component: Add
+      // }
     ]
   }
   ]
