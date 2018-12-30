@@ -30,7 +30,7 @@
           <el-form-item
             label="密码"
             prop="password"
-            v-show="isAdd"
+            v-if="isAdd"
           >
             <el-input
               v-model="formData.password"
@@ -79,7 +79,7 @@ export default {
           { min: 3, max: 9, message: '长度应该是3-9位之间', trigger: 'blur' }
         ],
         password: [
-          { required: false, message: '用户密码不能为空', trigger: 'blur' },
+          { required: true, message: '用户密码不能为空', trigger: 'blur' },
           { min: 6, max: 12, message: '长度应该是6-12位之间', trigger: 'blur' }
         ],
         email: [
@@ -96,24 +96,24 @@ export default {
     formData: Object
   },
   methods: {
-    onSubmit(form) {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          const url = this.dialog.option === 'add' ? '' : `${this.formData.id}`
-          const method = this.dialog.option === 'add' ? 'post' : 'put'
-          this.$axios({
-            method: `${method}`,
-            url: `api/users/${url}`,
-            data: this.formData }).then(res => {
-            // 添加成功
-            // console.log(this.formData)
-            this.$message.succses('添加成功')
-            // 隐藏对话框
-            this.dialog.show = false
-            this.$emit('update')
-          })
-        }
-      })
+    async onSubmit(form) {
+      try {
+        await this.$refs.form.validate()
+        const url = this.dialog.option === 'add' ? '' : `${this.formData.id}`
+        const method = this.dialog.option === 'add' ? 'post' : 'put'
+        await this.$axios({
+          method: `${method}`,
+          url: `api/users/${url}`,
+          data: this.formData
+        })
+        // 添加成功
+        this.$message.success('添加成功')
+        // 隐藏对话框
+        this.dialog.show = false
+        this.$emit('update')
+      } catch (error) {
+        return false
+      }
     }
   },
   computed: {
@@ -122,6 +122,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped lang="stylus">

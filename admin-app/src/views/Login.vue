@@ -77,33 +77,29 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$refs.form.validate(valid => {
-        if (!valid) return false
-        this.$axios.post('/api/login', this.form).then(res => {
-          // console.log(res)
-          if (res.data.meta.status === 200) {
-            this.$message({
-              message: '登录成功了',
-              type: 'success',
-              duration: 1000
-            })
-            const { token } = res.data.data
-            // 存储到ls
-            localStorage.setItem('token', token)
-            // 解析token
-            const decoded = jwtDecode(token)
-            // console.log(decoded)
+    async login() {
+      try {
+        await this.$refs.form.validate()
+        let res = await this.$axios.post('/api/login', this.form)
+        if (res.meta.status === 200) {
+          this.$message.success('登录成功了')
+          const { token } = res.data
+          // 存储到ls
+          localStorage.setItem('token', token)
+          // 解析token
+          const decoded = jwtDecode(token)
+          // console.log(decoded)
 
-            // token 存储到vuex中
-            this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
-            this.$store.dispatch('setUser', decoded)
-            this.$router.push('/index')
-          } else {
-            this.$message.error(res.data.meta.msg)
-          }
-        })
-      })
+          // token 存储到vuex中
+          this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))
+          this.$store.dispatch('setUser', decoded)
+          this.$router.push('/index')
+        } else {
+          this.$message.error(res.meta.msg)
+        }
+      } catch (error) {
+        return false
+      }
     },
     reset() {
       this.$refs.form.resetFields()

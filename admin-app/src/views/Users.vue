@@ -166,8 +166,8 @@ export default {
     this.getUserList()
   },
   methods: {
-    getUserList() {
-      this.$axios({
+    async getUserList() {
+      let res = await this.$axios({
         method: 'get',
         url: '/api/users',
         params: {
@@ -175,13 +175,12 @@ export default {
           pagenum: this.currentPage,
           pagesize: this.pageSize
         }
-      }).then(res => {
-        if (res.meta.status === 200) {
-          this.userList = res.data.users
-          this.total = res.data.total
-          // console.log(this.userList)
-        }
-      }).catch(err => console.log(err))
+      })
+      let { meta: { status }, data: { users, total } } = res
+      if (status === 200) {
+        this.userList = users
+        this.total = total
+      }
     },
     handleSizeChange(val) {
       this.pageSize = val
@@ -193,27 +192,25 @@ export default {
       // 重新渲染
       this.getUserList()
     },
-    handleDelete(id) {
-      // 弹出一个确认框
-      this.$confirm('你确定要删除该用户吗?', '温馨提示', {
-        type: 'warning'
-      })
-        .then(() => {
-          this.$axios.delete(`/api/users/${id}`).then(res => {
-            if (res.meta.status === 200) {
-              if (this.userList.length <= 1 && this.currentPage > 1) {
-                this.currentPage--
-              }
-              this.getUserList()
-              this.$message.success('删除成功')
-            } else {
-              this.$message.error('删除失败')
-            }
-          })
+    async handleDelete(id) {
+      try {
+        // 弹出一个确认框
+        await this.$confirm('你确定要删除该用户吗?', '温馨提示', {
+          type: 'warning'
         })
-        .catch(() => {
-          this.$message.info('取消删除')
-        })
+        let res = await this.$axios.delete(`/api/users/${id}`)
+        if (res.meta.status === 200) {
+          if (this.userList.length <= 1 && this.currentPage > 1) {
+            this.currentPage--
+          }
+          this.getUserList()
+          this.$message.success('删除成功')
+        } else {
+          this.$message.error('删除失败')
+        }
+      } catch (error) {
+        this.$message.info('取消删除')
+      }
     },
     handleEdit(index, row) {
       this.dialog = {
@@ -227,7 +224,6 @@ export default {
         email: row.email,
         mobile: row.mobile
       }
-      // console.log(this.formData)
     },
     handleAdd() {
       this.dialog = {
@@ -244,18 +240,15 @@ export default {
       this.dialog.show = true
     },
     searchUser() {
-
+      this.currentPage = 1
+      this.getUserList()
     },
-    changeState(user) {
-      // console.log(user)
-      // 发送ajax请求
-      this.$axios.put(`/api/users/${user.id}/state/${user.mg_state}`).then(res => {
-        // console.log(res)
-        if (res.meta.status === 200) {
-          this.$message.success('修改成功')
-          this.getUserList()
-        }
-      })
+    async changeState(user) {
+      let res = await this.$axios.put(`/api/users/${user.id}/state/${user.mg_state}`)
+      if (res.meta.status === 200) {
+        this.$message.success('修改成功')
+        this.getUserList()
+      }
     }
   }
 }

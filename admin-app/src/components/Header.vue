@@ -5,7 +5,7 @@
         :span="6"
         class="title"
       >
-        <h1>电商后台管理系统</h1>
+        <h1>后台管理系统</h1>
       </el-col>
       <el-col
         :span="6"
@@ -50,19 +50,21 @@ export default {
     showIndexList() {
       this.$router.push('/Index')
     },
-    logout() {
-      this.$confirm('您确定要退出本系统吗？', '温馨提示', {
-        type: 'warning'
-      }).then(() => {
+    async logout() {
+      try {
+        await this.$confirm('您确定要退出本系统吗？', '温馨提示', {
+          type: 'warning'
+        })
         // 清除token
         localStorage.removeItem('token')
         // 设置vuex store
         this.$store.dispatch('clearCurrentState')
         // 跳转
         this.$router.push('/login')
-      }).catch(() => {
+        this.$message.success('退出系统成功')
+      } catch (error) {
         this.$message.info('取消退出')
-      })
+      }
     }
   }
 }
