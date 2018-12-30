@@ -4,6 +4,7 @@ import Index from '@/views/Index'
 import NotFound from '@/views/404'
 import Login from '@/views/Login'
 import Users from '@/views/Users'
+import Rights from '@/views/Rights'
 
 Vue.use(Router)
 
@@ -29,11 +30,11 @@ const router = new Router({
     children: [{
       path: '/users',
       component: Users
+    },
+    {
+      path: '/rights',
+      component: Rights
     }
-      // {
-      //   path: '/rights',
-      //   component: Rights
-      // },
       // {
       //   path: '/roles',
       //   component: Roles
