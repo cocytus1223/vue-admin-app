@@ -57,8 +57,8 @@ export default {
           name: '权限管理',
           path: 'authority',
           children: [
-            { path: 'roles', name: '角色管理' },
-            { path: 'rights', name: '权限管理' }
+            { path: 'roles', name: '角色列表' },
+            { path: 'rights', name: '权限列表' }
           ]
         },
         {

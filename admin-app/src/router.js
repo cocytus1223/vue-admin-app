@@ -5,6 +5,7 @@ import NotFound from '@/views/404'
 import Login from '@/views/Login'
 import Users from '@/views/Users'
 import Rights from '@/views/Rights'
+import Roles from '@/views/Roles'
 
 Vue.use(Router)
 
@@ -34,11 +35,11 @@ const router = new Router({
     {
       path: '/rights',
       component: Rights
+    },
+    {
+      path: '/roles',
+      component: Roles
     }
-      // {
-      //   path: '/roles',
-      //   component: Roles
-      // },
       // {
       //   path: '/categories',
       //   component: Categories
