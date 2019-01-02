@@ -6,6 +6,8 @@ import Login from '@/views/Login'
 import Users from '@/views/Users'
 import Rights from '@/views/Rights'
 import Roles from '@/views/Roles'
+import Categories from '@/views/Category'
+// import Goods from '@/views/Goods'
 
 Vue.use(Router)
 
@@ -39,15 +41,15 @@ const router = new Router({
     {
       path: '/roles',
       component: Roles
+    },
+    {
+      path: '/categories',
+      component: Categories
     }
-      // {
-      //   path: '/categories',
-      //   component: Categories
-      // },
       // {
       //   path: '/goods',
       //   component: Goods
-      // },
+      // }
       // {
       //   path: '/goods-add',
       //   component: Add
